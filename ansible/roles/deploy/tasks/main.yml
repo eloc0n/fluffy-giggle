@@ -1,0 +1,13 @@
+- name: Copy application files
+  copy:
+    src: "{{ item }}"
+    dest: /home/grapevine/Projects/Go/go-api/
+    owner: your_user
+    group: your_user
+  with_fileglob:
+    - "../../*"
+
+- name: Start application using Docker Compose
+  command: docker-compose up --build -d
+  args:
+    chdir: /home/your_user/my-go-api/

@@ -1,0 +1,7 @@
+- name: Update apt and install dependencies
+  apt:
+    update_cache: yes
+    name: 
+      - docker.io
+      - docker-compose
+    state: present
