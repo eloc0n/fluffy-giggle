@@ -2,13 +2,16 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"go-api/api/dynamicvariables"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/joho/godotenv"
 )
 
 func AuthMiddleware(secretKey string) gin.HandlerFunc {
@@ -54,7 +57,12 @@ func AuthMiddleware(secretKey string) gin.HandlerFunc {
 
 func main() {
 	router := gin.Default()
-	secretKey := "b7ac1ebe1d3b143385067230b4db785cbdc4a4cfc1603ee548c79f69a94c00ef"
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	secretKey := os.Getenv("secretKey")
 
 	authorized := router.Group("/")
 	authorized.Use(AuthMiddleware(secretKey))
